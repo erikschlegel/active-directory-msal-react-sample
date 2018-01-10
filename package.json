@@ -1,7 +1,8 @@
 {
-  "name": "erik-ad-test",
+  "name": "msal.js.client",
   "version": "0.1.0",
   "private": true,
+  "main": "Auth.js",
   "dependencies": {
     "msal": "^0.1.3",
     "promise": "^8.0.1",

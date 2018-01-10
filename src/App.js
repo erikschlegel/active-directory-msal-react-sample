@@ -37,6 +37,10 @@ class App extends Component {
     });
   }
 
+  componentDidMount(){
+    this.setState({isLoggedIn: this.state.authProfile.isLoggedIn()});
+  }
+
   handleLoginClick(){
     const self = this;
     this.state.authProfile.adLogin().then(()=>{

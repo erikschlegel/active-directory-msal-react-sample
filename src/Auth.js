@@ -2,11 +2,10 @@ import { UserAgentApplication, Logger } from 'msal';
 import Promise from 'promise';
 
 const adAppId = process.env.REACT_APP_AD_CLIENT_ID;
-const adGraphScope = ["user.read", "mail.send"];
+const adGraphScope = ["user.read"];
 const TokenStoreKey = 'AD.Token';
 
 function adHandleToken(token, resolve) {
-    console.log(`called ${token}`);
     localStorage.setItem(TokenStoreKey, token);
     resolve();
 }
@@ -27,7 +26,7 @@ export default class AuthClient {
     init() {
         this.adApp = new UserAgentApplication(
             adAppId,
-            null,
+            "https://login.microsoftonline.com/microsoft.onmicrosoft.com",
             authCallback,
             {
                 cacheLocation: 'localStorage',
@@ -48,7 +47,7 @@ export default class AuthClient {
                         .then(token=>adHandleToken(token, resolve))
                         .catch(error => {
                             this.adApp.acquireTokenPopup(adGraphScope)
-                                .then(token=>adHandleToken(token, resolve))
+                                .then(tokenErr=>adHandleToken(tokenErr, resolve))
                                 .catch(adHandleError);
                         });
                 }).catch(adHandleError);
